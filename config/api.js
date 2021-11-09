@@ -8,7 +8,9 @@ var fs = require('fs');
  * @param response 返回请求
  */
 function getDataFromPath(apiName, method, params, response) {
+    console.log(`请求信息日志：======> start`);
     console.log('request URL：' + apiName + `\n`, 'request method：' + method);
+    console.log(`请求信息日志：======> end`);
     if (apiName) {
         // 使用fs.access()方法判断文件和目录是否存在
         fs.access(
