@@ -32,4 +32,44 @@ Welcome to Express
 respond with a resource
 ```
 打开```routes/users.js```文件，可以看到该页面的返回信息是在此文件中定义的。
+
 ---
+
+根据需要的请求在```routes/```目录下自定义对应的js，返回想要的模拟数据即可。
+
+---
+使用上述命令自动生成的app.js文件，存在一些问题：
+### 问题1：改变对应的请求的文件内容时，请求返回的数据未更新
+**问题原因：** 项目启动后，已访问的请求会先读取缓存中的数据，改变的文件内容未更新到缓存。
+**解决方案：** 每次更改请求对应的文件内容后，重启项目，或者修改请求时的js，使每次请求时不获取缓存内容，每次重新获取文件内容
+
+### 问题2：请求的包含模拟数据的文件需要在```app.js```文件中配置路径，当请求过多时，配置起来过于繁琐
+**解决方案：** 统一模拟数据文件的请求方式，将文件全部放到一个目录中，根据请求路径逐层放置
+**实现：** 见【优化】
+
+---
+
+### 优化
+为了解决缓存问题及统一请求路径，现做如下处理
+1、在项目根目录下配置```config/api.js```，配置信息详见文件内容
+    在其中获取请求路径对应本地文件路径下的文件内容，
+    如果有对应的文件，则先清除相应的缓存信息并获取文件内容后返回，否则返回错误信息。
+2、在```app.js```文件中引用```api.js```
+```
+    var api = require('./config/api'); // 引入api.js
+```
+    再配置请求
+```
+    app.get('/', function (req, res) {
+      res.send('hello world');
+    });
+    app.get('/api/*', api.get);
+    app.post('/api/*', api.post);
+    app.options('/api/*', function (req, res, next) {
+      res.header('Access-Control-Allow-Origin', '*');
+      res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
+      res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+      res.sendStatus(200); // 让options请求快速返回
+    });
+```
+
