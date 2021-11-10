@@ -22,7 +22,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function (request, response, next) {
-  if (request.url && request.url !== '/' && !request.url.startsWith('api')) { // 如果请求url不是以“/”开头且不是以“/api”开头，则自动补上
+  if (request.url && request.url !== '/' && !request.url.startsWith('api')) { // 如果请求url不为“/”且不以“/api”开头，则自动补上
     request.url = '/api' + request.url;
   }
   next();

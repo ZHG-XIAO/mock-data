@@ -50,16 +50,18 @@ respond with a resource
 ---
 
 ### 优化
-为了解决缓存问题及统一请求路径，现做如下处理
-1、在项目根目录下配置```config/api.js```，配置信息详见文件内容
-    在其中获取请求路径对应本地文件路径下的文件内容，
-    如果有对应的文件，则先清除相应的缓存信息并获取文件内容后返回，否则返回错误信息。
-2、在```app.js```文件中引用```api.js```
+为了解决缓存问题及统一请求路径，现做如下处理：
+1. 在项目根目录下配置```config/api.js```，配置信息详见文件内容。
+在其中获取请求路径对应本地文件路径下的文件内容；如果有对应的文件，则先清除相应的缓存信息并获取文件内容后返回，否则返回错误信息。
+    
+2. 在```app.js```文件中引用```api.js```。
 ```
-    var api = require('./config/api'); // 引入api.js
+    // 引入api.js
+    var api = require('./config/api');
 ```
-    再配置请求
+    
 ```
+    // 配置请求
     app.get('/', function (req, res) {
       res.send('hello world');
     });
@@ -73,3 +75,13 @@ respond with a resource
     });
 ```
 
+在```app.js```中，如果需要的话还可以在配置请求之前对请求的url做一些处理，比如请求的url不是“/”且不以“/api”开头，则自动在请求url前补上“/api”。
+当然还可以做一些其他需要的处理。
+```
+    app.use(function (request, response, next) {
+      if (request.url && request.url !== '/' && !request.url.startsWith('api')) { // 如果请求url不是“/”且不是以“/api”开头，则自动补上
+        request.url = '/api' + request.url;
+      }
+      next();
+    });
+```
