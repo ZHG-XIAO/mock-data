@@ -6,7 +6,7 @@
 npm install -g express-generator
 ```
 
-## 1.3 创建express应用程序(名称：mock-data)
+## 1.3 创建express应用(名称：mock-data)
 ```
 express --view=pug mock-data
 ```
@@ -93,4 +93,6 @@ respond with a resource
 ```
 
 ## 参考文档
-学习更多Express知识，请查看[**Node.js Express 框架(菜鸟教程)**](https://www.runoob.com/nodejs/nodejs-express-framework.html)
+学习更多Express框架知识，请查看
+- [**Node.js Express 框架(菜鸟教程)**](https://www.runoob.com/nodejs/nodejs-express-framework.html)
+- [**Express 中文网**](https://www.expressjs.com.cn/)
