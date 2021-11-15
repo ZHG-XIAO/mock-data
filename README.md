@@ -17,11 +17,11 @@ npm i
 ```
 ## 1.5 运行项目
 ```
-npm start
+npm run start
 ```
 
 ---
-浏览器访问```http://localhost:3000```，可以看到页面上显示如下信息，则说明已经成功启动服务了。
+浏览器访问```http://localhost:3000```，可以看到页面上显示如下信息，则说明已经成功启动服务了。(默认端口号：3000)
 ```
 Express
 Welcome to Express
