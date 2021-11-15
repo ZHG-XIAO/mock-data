@@ -22,7 +22,7 @@ function getDataFromPath(apiName, method, params, response) {
                     // 每次请求都清除模块缓存重新请求
                     delete require.cache[require.resolve('..' + apiName)];
                     try {
-                        // 请求文件内容，getData()方法为文件内容中的数据获取方法
+                        // 请求文件内容，使用require()方法加载对应的文件模块，通过文件模块内的getData()访问方法为获取数据
                         addApiResult(response, method, require('..' + apiName).getData(method, params));
                     } catch (e) {
                         console.error(e.stack);
