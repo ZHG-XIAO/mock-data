@@ -40,7 +40,7 @@ function getDataFromFile(filePathName, method, params, response) {
     delete require.cache[require.resolve('..' + filePathName)];
     try {
         // 请求文件内容，使用require()方法加载对应的文件模块，通过文件模块内的getData()访问方法为获取数据
-        addApiResult(response, method, require('..' + filePathName).getData(method, params));
+        addApiResult(response, require('..' + filePathName).getData(method, params));
     } catch (e) {
         console.error(e.stack);
         response.status(500).send(filePathName + ' has an error, please check the code.');
@@ -62,10 +62,9 @@ function setApiHeader(response) {
 /**
  * 返回参数，如无返回参数返回404
  * @param response 响应信息
- * @param method 方法
  * @param result 请求结果
  */
-function addApiResult(response, method, result) {
+function addApiResult(response, result) {
     if (result) {
         response.send(result);
     } else {
